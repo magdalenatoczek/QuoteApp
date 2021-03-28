@@ -15,6 +15,11 @@
 		AAC961442610907A00C496DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAC961422610907A00C496DB /* LaunchScreen.storyboard */; };
 		AAC9614F2610907A00C496DB /* quoteAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC9614E2610907A00C496DB /* quoteAppTests.swift */; };
 		AAC9615A2610907B00C496DB /* quoteAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC961592610907B00C496DB /* quoteAppUITests.swift */; };
+		AAC96175261091EE00C496DB /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC96174261091EE00C496DB /* DataService.swift */; };
+		AAC9617A261097C600C496DB /* MainData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC96179261097C600C496DB /* MainData.swift */; };
+		AAC9618226109DAC00C496DB /* QuotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC9618126109DAC00C496DB /* QuotesManager.swift */; };
+		AAC9618726109E0500C496DB /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC9618626109E0500C496DB /* QuoteModel.swift */; };
+		AAFD01412610EB27004660C6 /* BlurLabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFD01402610EB27004660C6 /* BlurLabelWithPadding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +54,11 @@
 		AAC961552610907B00C496DB /* quoteAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = quoteAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC961592610907B00C496DB /* quoteAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quoteAppUITests.swift; sourceTree = "<group>"; };
 		AAC9615B2610907B00C496DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAC96174261091EE00C496DB /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		AAC96179261097C600C496DB /* MainData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainData.swift; sourceTree = "<group>"; };
+		AAC9618126109DAC00C496DB /* QuotesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesManager.swift; sourceTree = "<group>"; };
+		AAC9618626109E0500C496DB /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
+		AAFD01402610EB27004660C6 /* BlurLabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurLabelWithPadding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +111,10 @@
 			children = (
 				AAC961372610907800C496DB /* AppDelegate.swift */,
 				AAC961392610907800C496DB /* SceneDelegate.swift */,
-				AAC9613B2610907800C496DB /* ViewController.swift */,
+				AAC9616D261090AA00C496DB /* Model */,
+				AAC9616E261090B100C496DB /* View */,
+				AAC9616F261090B900C496DB /* Controller */,
+				AAC96170261090FE00C496DB /* Service */,
 				AAC9613D2610907800C496DB /* Main.storyboard */,
 				AAC961402610907A00C496DB /* Assets.xcassets */,
 				AAC961422610907A00C496DB /* LaunchScreen.storyboard */,
@@ -126,6 +139,40 @@
 				AAC9615B2610907B00C496DB /* Info.plist */,
 			);
 			path = quoteAppUITests;
+			sourceTree = "<group>";
+		};
+		AAC9616D261090AA00C496DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AAC96179261097C600C496DB /* MainData.swift */,
+				AAC9618626109E0500C496DB /* QuoteModel.swift */,
+				AAC9618126109DAC00C496DB /* QuotesManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AAC9616E261090B100C496DB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AAFD01402610EB27004660C6 /* BlurLabelWithPadding.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AAC9616F261090B900C496DB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AAC9613B2610907800C496DB /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AAC96170261090FE00C496DB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				AAC96174261091EE00C496DB /* DataService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +307,12 @@
 			files = (
 				AAC9613C2610907800C496DB /* ViewController.swift in Sources */,
 				AAC961382610907800C496DB /* AppDelegate.swift in Sources */,
+				AAC9618226109DAC00C496DB /* QuotesManager.swift in Sources */,
 				AAC9613A2610907800C496DB /* SceneDelegate.swift in Sources */,
+				AAC96175261091EE00C496DB /* DataService.swift in Sources */,
+				AAFD01412610EB27004660C6 /* BlurLabelWithPadding.swift in Sources */,
+				AAC9617A261097C600C496DB /* MainData.swift in Sources */,
+				AAC9618726109E0500C496DB /* QuoteModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,7 +498,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.magdalenatoczek.quoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -465,7 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.magdalenatoczek.quoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
