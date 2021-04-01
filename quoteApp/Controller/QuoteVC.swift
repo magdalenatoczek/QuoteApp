@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class QuoteVC: UIViewController {
     
 
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var quoteTextLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
     
+    @IBOutlet weak var listBtn: UIButton!
     let quotesManager = QuotesManager()
     var myQuotes = [QuoteModel]()
    
@@ -23,11 +24,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        
+        listBtn.layer.cornerRadius = CGFloat(20.0)
+        
         hideViewElements()
         loadImage()
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRecognizer(_:)))
         panRecognizer.maximumNumberOfTouches = 1
         self.view.addGestureRecognizer(panRecognizer)
+        
+        
+        
+       
+        
 }
     
     
@@ -37,15 +46,14 @@ class ViewController: UIViewController {
     
     
     func loadRandomQuote(){
-        quotesManager.prepareDataForQuotes { (quotes) in
+        quotesManager.prepareQuote(genre: "age") { (quote) in
             DispatchQueue.main.async  {
                 self.tagTextLabel.isHidden = false
                 self.authorTextLabel.isHidden = false
                 self.quoteTextLabel.isHidden = false
-                self.tagTextLabel.text = "#" + quotes[0].quoteGenre
-                self.authorTextLabel.text = quotes[0].quoteAuthor
-                self.quoteTextLabel.text = quotes[0].quoteText
-                print(quotes[0].quoteAuthor)
+                self.tagTextLabel.text = "#" + quote.quoteGenre
+                self.authorTextLabel.text = quote.quoteAuthor
+                self.quoteTextLabel.text = quote.quoteText
                 UIView.animate(withDuration: 1.0) {
                     self.containerView.alpha = 1.0
                
@@ -58,15 +66,14 @@ class ViewController: UIViewController {
     func loadImage(){
         quotesManager.downloadImage { (image) in
             DispatchQueue.main.async  {
-                self.backgroundImageView.image = image.withAlignmentRectInsets(UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
-            self.backgroundImageView.clipsToBounds = true
-                
-                UIView.animate(withDuration: 1.0) {
+                self.backgroundImageView.image = image.withAlignmentRectInsets(UIEdgeInsets(top:60, left: 0, bottom: 0, right: 0))
+                UIView.animate(withDuration: 0.5) {
                     self.backgroundImageView.alpha = 1.0
                 }
             }
         }
     }
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
@@ -87,23 +94,29 @@ class ViewController: UIViewController {
             loadImage()
             loadRandomQuote()
         }
-
     }
     
     
     func hideViewElements(){
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.5) {
             self.tagTextLabel.isHidden = true
             self.authorTextLabel.isHidden = true
             self.quoteTextLabel.isHidden = true
             self.containerView.alpha = 0.0
             self.backgroundImageView.alpha = 0.0
         }
-        
-
     }
     
     
+    
+    
+    
+    @IBAction func listBtnClicked(_ sender: Any) {
+        
+        let vc = storyboard?.instantiateViewController(identifier: "GenreVC") as! GenreVC
+        vc.quotesManager = quotesManager
+        present(vc, animated: true, completion: nil)
+    }
     
     
 }

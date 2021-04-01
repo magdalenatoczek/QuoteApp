@@ -10,26 +10,33 @@ import UIKit
 
 class QuotesManager {
     
+
     let url_quotes_random = "https://quote-garden.herokuapp.com/api/v3/quotes/random"
-    let url_quotes_list = "https://quote-garden.herokuapp.com/api/v3/quotes?limit=200"
-    
+    let url_quotes_random_with_genre = "https://quote-garden.herokuapp.com/api/v3/quotes/random?genre="
+    let url_genres = "https://quote-garden.herokuapp.com/api/v3/genres"
     
     let url_pic = "https://picsum.photos/450/950"
-    
+
 
     
-    func prepareDataForQuotes(completion: @escaping([QuoteModel])->Void){
-
-        //depending on switch and state
-        var  url = url_quotes_random
+    func prepareQuote(genre: String?, completion: @escaping(QuoteModel)->Void){
+        
+        var url: String
+        if let genre = genre {
+            url = url_quotes_random_with_genre + genre
+        } else {
+            url = url_quotes_random
+        }
+        
         DataService.INSTANCE.downloadData(fromUrl: url) { (data) in
-          let quotes = self.decodeJsonData(data: data)
-          completion(quotes)
+            let quote = self.decodeJsonDataForQuotes(data: data)
+            completion(quote)
         }
     }
     
     
-    func decodeJsonData(data: Data) -> [QuoteModel] {
+    func decodeJsonDataForQuotes(data: Data) -> QuoteModel {
+        
         var quotes = [QuoteModel]()
         let decoder = JSONDecoder()
         do{
@@ -39,23 +46,60 @@ class QuotesManager {
                 quotes.append(quoteModel)
             }
         } catch{
-            print("there was a problem in decoding data")
+            print("there was a problem with decoding data")
             print(error)
         }
-        return quotes
+        return quotes[0]
     }
     
     
+    
+    
+    func prepareGenres (completion: @escaping([String])->Void){
+        
+        let url = url_genres
+        DataService.INSTANCE.downloadData(fromUrl: url) { (data) in
+            let listOfGenres = self.decodeJsonDataForGenres(data: data)
+            completion(listOfGenres)
+        }
+    }
+    
+    
+    
+    func decodeJsonDataForGenres(data: Data) -> [String] {
+        var genres = [String]()
+        let decoder = JSONDecoder()
+        
+        do{
+            let decoderData = try decoder.decode(Genre.self, from: data)
+            for genre in decoderData.data {
+                genres.append(genre)
+            }
+        } catch{
+            print("there was a problem with decoding data - genres")
+            print(error)
+        }
+        return genres
+    }
+    
+    
+
+    
     func downloadImage(completion: @escaping(UIImage)->Void){
-        var  url = url_pic
+        let  url = url_pic
         DataService.INSTANCE.downloadData(fromUrl: url) { (imageData) in
             let imge = UIImage(data: imageData)
             completion(imge!)
         }
-        
-        
     }
     
     
+    
+    
+    
+    
+
+    
+ 
     
 }
