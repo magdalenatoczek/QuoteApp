@@ -8,6 +8,7 @@
 import UIKit
 
 class QuoteVC: UIViewController {
+  
     
 
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -18,68 +19,65 @@ class QuoteVC: UIViewController {
     
     @IBOutlet weak var listBtn: UIButton!
     let quotesManager = QuotesManager()
-    var myQuotes = [QuoteModel]()
+    var genre: String?
+    
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     
+        self.tagTextLabel.alpha = 0.0
+        self.authorTextLabel.alpha = 0.0
+        self.quoteTextLabel.alpha = 0.0
+        
+        setUpView(genre: genre)
         
         listBtn.layer.cornerRadius = CGFloat(20.0)
-        
-        hideViewElements()
-        loadImage()
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRecognizer(_:)))
         panRecognizer.maximumNumberOfTouches = 1
         self.view.addGestureRecognizer(panRecognizer)
         
-        
-        
-       
-        
 }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        loadRandomQuote()
-    }
-    
-    
-    func loadRandomQuote(){
-        quotesManager.prepareQuote(genre: "age") { (quote) in
-            DispatchQueue.main.async  {
-                self.tagTextLabel.isHidden = false
-                self.authorTextLabel.isHidden = false
-                self.quoteTextLabel.isHidden = false
-                self.tagTextLabel.text = "#" + quote.quoteGenre
-                self.authorTextLabel.text = quote.quoteAuthor
-                self.quoteTextLabel.text = quote.quoteText
-                UIView.animate(withDuration: 1.0) {
-                    self.containerView.alpha = 1.0
-               
-                }
-            }
+    func hideViewElements(){
+      
+        UIView.animate(withDuration: 1){
+            self.tagTextLabel.alpha = 0.0
+            self.authorTextLabel.alpha = 0.0
+            self.quoteTextLabel.alpha = 0.0
+            self.backgroundImageView.alpha = 0.4
         }
     }
     
     
-    func loadImage(){
-        quotesManager.downloadImage { (image) in
+    func setUpView(genre: String?) {
+       
+      hideViewElements()
+      downloadQuoteAndImage(genre: genre)
+    }
+    
+    
+    func downloadQuoteAndImage(genre: String?){
+        quotesManager.combineQuoteAndImage(genre: genre) { (quote, image) in
             DispatchQueue.main.async  {
-                self.backgroundImageView.image = image.withAlignmentRectInsets(UIEdgeInsets(top:60, left: 0, bottom: 0, right: 0))
-                UIView.animate(withDuration: 0.5) {
-                    self.backgroundImageView.alpha = 1.0
-                }
+                    self.tagTextLabel.text = "#" + quote.quoteGenre
+                    self.authorTextLabel.text = quote.quoteAuthor
+                    self.quoteTextLabel.text = quote.quoteText
+                    self.backgroundImageView.image = image.withAlignmentRectInsets(UIEdgeInsets(top:60, left: 0, bottom: 0, right: 0))
+              
+                UIView.animate(withDuration: 2) {
+                        self.tagTextLabel.alpha = 1.0
+                        self.authorTextLabel.alpha = 1.0
+                        self.quoteTextLabel.alpha = 1.0
+                        self.backgroundImageView.alpha = 1.0
+                    }
             }
         }
     }
     
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle{
-        return .lightContent
-    }
-    
-    
+
   
     @objc func handlePanGestureRecognizer(_ recognizer: UIPanGestureRecognizer){
         var changeQuote = false
@@ -90,33 +88,61 @@ class QuoteVC: UIViewController {
         }
 
         if recognizer.state == .ended && changeQuote == true{
-            self.hideViewElements()
-            loadImage()
-            loadRandomQuote()
+            setUpView(genre: genre)
         }
     }
     
     
-    func hideViewElements(){
-        UIView.animate(withDuration: 0.5) {
-            self.tagTextLabel.isHidden = true
-            self.authorTextLabel.isHidden = true
-            self.quoteTextLabel.isHidden = true
-            self.containerView.alpha = 0.0
-            self.backgroundImageView.alpha = 0.0
-        }
+
+
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
     
-    
-    
-    
-    
-    @IBAction func listBtnClicked(_ sender: Any) {
+    @IBAction func listBtnClicked(_ sender: UIButton) {
         
         let vc = storyboard?.instantiateViewController(identifier: "GenreVC") as! GenreVC
+        vc.delegate = self
         vc.quotesManager = quotesManager
+        vc.preferredContentSize = CGSize(width: 200, height: 400)
+        vc.modalPresentationStyle = .popover
+        vc.popoverPresentationController?.delegate = self
         present(vc, animated: true, completion: nil)
+        vc.popoverPresentationController?.sourceView = sender
+        vc.popoverPresentationController?.sourceRect = sender.bounds
+
+    }
+}
+
+
+
+
+
+//MARK:- EXTENSIONS
+extension QuoteVC:  UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
+}
+
+
+
+extension QuoteVC: CategoryDelegate {
+    
+    func selectedCategory(category: String) {
+      genre = category
+      setUpView(genre: genre)
+        
+    }
     
 }
+
+
+
+
+
+
+

@@ -96,6 +96,13 @@ class QuotesManager {
     
     
     
+    func combineQuoteAndImage(genre: String?, completion: @escaping (_ quote: QuoteModel, _ image: UIImage )-> Void){
+        prepareQuote(genre: genre) { (quote) in
+            self.downloadImage { (image) in
+                completion(quote,image)
+            }
+        }
+    }
     
     
 
