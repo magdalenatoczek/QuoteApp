@@ -1,6 +1,6 @@
 # QuoteApp 
 
-<img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC2.png" width="150" >   <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/exSC.png" width="150" >   <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC3.png" width="150" >  <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC4.png" width="150" >
+<img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC2.png" width="300" >   <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/exSC.png" width="300" >   <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC3.png" width="300" >  <img src="https://github.com/magdalenatoczek/QuoteApp/blob/main/egSC4.png" width="300" >
 
 
 Api thanks to:
